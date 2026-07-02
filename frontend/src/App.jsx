@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -19,6 +20,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
 
       </Routes>
+
+      <Toaster />
+      
     </BrowserRouter>
   );
 }

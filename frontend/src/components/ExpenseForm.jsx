@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { addExpense, updateExpense } from "../services/expenseService";
+import toast from "react-hot-toast";
 
 function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
   const [formData, setFormData] = useState({
@@ -37,9 +38,14 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
     try {
       if (editingExpense) {
         await updateExpense(editingExpense.id, formData);
+
+        toast.success("Expense updated successfully");
+
         onEditComplete();
       } else {
         await addExpense(formData);
+
+        toast.success("Expense added successfully");
       }
 
       onExpenseAdded();
@@ -51,7 +57,7 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
         date: "",
       });
     } catch (error) {
-      console.log(error);
+      toast.error(error.message);
     }
   }
 
