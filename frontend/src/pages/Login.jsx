@@ -2,6 +2,7 @@ import { useState } from "react";
 import { login } from "../services/authService";
 import { Link, useNavigate } from "react-router-dom";
 import { Wallet } from "lucide-react";
+import toast from "react-hot-toast";
 
 function Login() {
   const navigate = useNavigate();
@@ -37,6 +38,8 @@ function Login() {
 
     try {
       await login(formData.email, formData.password);
+
+      toast.success("Login successful");
 
       navigate("/dashboard");
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
 import { Wallet } from "lucide-react";
+import toast from "react-hot-toast";
 
 function Register() {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ function Register() {
 
     try {
       await register(formData.name, formData.email, formData.password);
-
+      toast.success("Registration successful");
       navigate("/dashboard");
     } catch (error) {
       setError(
