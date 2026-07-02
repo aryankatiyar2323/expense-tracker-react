@@ -7,6 +7,8 @@ const register = async (name, email, password) => {
             email,
             password,
         });
+        
+        localStorage.setItem("token", response.data.token);
 
         return response.data;
 

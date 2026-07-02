@@ -1,9 +1,14 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../services/authService";
+import { Wallet } from "lucide-react";
 
 function Register() {
   const navigate = useNavigate();
+
+  const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -12,6 +17,8 @@ function Register() {
   });
 
   function handleChange(event) {
+    setError("");
+
     const { name, value } = event.target;
 
     setFormData((prevData) => {
@@ -24,26 +31,35 @@ function Register() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+    setLoading(true);
+    setError("");
 
     try {
       await register(formData.name, formData.email, formData.password);
 
-      navigate("/");
-
-      console.log(data);
+      navigate("/dashboard");
     } catch (error) {
-      console.log(error);
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
+    } finally {
+      setLoading(false);
     }
   }
 
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <div className="auth-logo">🚀</div>
+        <div className="auth-logo">
+          <Wallet size={38} />
+        </div>
 
         <h1 className="auth-title">Create Account</h1>
 
         <p className="auth-subtitle">Start tracking your expenses today.</p>
+
+        {error && <p className="auth-error">{error}</p>}
 
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
@@ -53,6 +69,7 @@ function Register() {
             placeholder="Full Name"
             value={formData.name}
             onChange={handleChange}
+            disabled={loading}
           />
 
           <input
@@ -62,6 +79,7 @@ function Register() {
             placeholder="Email Address"
             value={formData.email}
             onChange={handleChange}
+            disabled={loading}
           />
 
           <input
@@ -71,10 +89,11 @@ function Register() {
             placeholder="Password"
             value={formData.password}
             onChange={handleChange}
+            disabled={loading}
           />
 
-          <button className="auth-btn" type="submit">
-            Create Account
+          <button className="auth-btn" type="submit" disabled={loading}>
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 

@@ -6,6 +6,10 @@ import { Wallet } from "lucide-react";
 function Login() {
   const navigate = useNavigate();
 
+  const [error, setError] = useState("");
+
+  const[loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -13,6 +17,8 @@ function Login() {
 
   function handleChange(event) {
     const { name, value } = event.target;
+    
+    setError("");
 
     setFormData((prevData) => {
       return {
@@ -24,17 +30,21 @@ function Login() {
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    setError("");
+    
+    setLoading(true);
+
     try {
       await login(formData.email, formData.password);
 
       navigate("/dashboard");
 
-      setFormData({
-        email: "",
-        password: "",
-      });
     } catch (error) {
-      console.log(error);
+      setError(error.response?.data?.message || "Something went wrong. Please try again.");
+    }
+    finally{
+      setLoading(false);
     }
   }
 
@@ -49,6 +59,8 @@ function Login() {
 
         <p className="auth-subtitle">Welcome back! Login to continue.</p>
 
+        {error && <p className="auth-error">{error}</p>}
+
         <form className="auth-form" onSubmit={handleSubmit}>
           <input
             className="auth-input"
@@ -57,6 +69,7 @@ function Login() {
             type="email"
             placeholder="Email Address"
             value={formData.email}
+            disabled={loading}
           />
 
           <input
@@ -66,10 +79,11 @@ function Login() {
             type="password"
             placeholder="Password"
             value={formData.password}
+            disabled={loading}
           />
 
-          <button className="auth-btn" type="submit">
-            Login
+          <button className="auth-btn" type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
