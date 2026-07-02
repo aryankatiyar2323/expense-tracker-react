@@ -760,3 +760,27 @@ button:active {
 .auth-error {
   transition: all 0.2s ease;
 }
+
+/* ================= SEARCH ================= */
+
+.search-container {
+  margin: 1.5rem 0;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+
+  font-size: 1rem;
+  outline: none;
+
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+}

@@ -7,8 +7,18 @@ import ExpenseList from "../components/ExpenseList";
 
 function Dashboard() {
   const [editingExpense, setEditingExpense] = useState(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [expenses, setExpenses] = useState([]);
+
+  const search = searchTerm.trim().toLowerCase();
+
+  const filteredExpenses = expenses.filter((expense) => {
+    return (
+      expense.title.toLowerCase().includes(search) ||
+      expense.category.toLowerCase().includes(search)
+    );
+  });
 
   async function fetchExpenses() {
     const expenses = await getExpenses();
@@ -59,8 +69,18 @@ function Dashboard() {
           </div>
         )}
 
+        <div className="search-container">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search expenses..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
+
         <ExpenseList
-          expenses={expenses}
+          expenses={filteredExpenses}
           onExpenseDeleted={fetchExpenses}
           onEdit={(expense) => {
             setEditingExpense(expense);
