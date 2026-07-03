@@ -132,6 +132,15 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
         }
         dateFormat="dd/MM/yyyy"
         placeholderText="Select Date"
+        popperPlacement="bottom-start"
+        popperModifiers={[
+          {
+            name: "flip",
+            enabled: false,
+          },
+        ]}
+        showPopperArrow={false}
+        preventOpenOnFocus={false}
       />
 
       <button type="submit">

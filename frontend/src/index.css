@@ -901,6 +901,41 @@ button:active {
   transform: scale(0.92) rotate(90deg);
 }
 
+.react-datepicker__navigation {
+    width: 36px !important;
+    height: 36px !important;
+
+    padding: 0 !important;
+
+    background: transparent !important;
+
+    border: none !important;
+
+    box-shadow: none !important;
+
+    border-radius: 8px !important;
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.react-datepicker__navigation:hover {
+    background: rgba(255,255,255,.06) !important;
+
+    transform: none !important;
+}
+
+.react-datepicker__navigation:active {
+    transform: none !important;
+}
+
+.react-datepicker__navigation-icon::before {
+    border-color: white !important;
+
+    border-width: 2px 2px 0 0 !important;
+}
+
 /* =================================================================
    MODAL & OVERLAY
 ================================================================= */
@@ -1551,7 +1586,7 @@ select:focus-visible,
 
 .react-datepicker-popper,
 .react-select__menu-portal {
-  z-index: 999999 !important;
+  z-index: 9999 !important;
 }
 
 .react-datepicker {
