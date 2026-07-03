@@ -115,10 +115,13 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
         onChange={(selectedOption) =>
           setFormData((prevData) => ({
             ...prevData,
-            category: selectedOption.value,
+            category: selectedOption?.value || "",
           }))
         }
         isSearchable
+        menuPortalTarget={document.body}
+        menuPosition="fixed"
+        menuPlacement="auto"
       />
 
       <DatePicker
@@ -131,6 +134,7 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
         }
         dateFormat="dd/MM/yyyy"
         placeholderText="Select Date"
+        popperPlacement="bottom-start"
       />
 
       <button type="submit">

@@ -261,6 +261,19 @@ body {
   transform: none !important;
 }
 
+.expense-form {
+  background: var(--material-card);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-lg);
+  padding: 24px;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
 .expense-form h2 {
   grid-column: 1/-1;
   font-size: 19px;
