@@ -633,14 +633,15 @@ button:active {
 
 .modal {
   width: min(480px, 100%);
-  /* FIX: Increased background alpha to 0.98 */
-  background: rgba(30, 30, 33, 0.98);
-  backdrop-filter: blur(40px) saturate(160%);
-  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  /* FIX: Back to translucent glass, but with a massive 64px blur to hide text behind it */
+  background: rgba(35, 35, 40, 0.72);
+  backdrop-filter: blur(64px) saturate(200%);
+  -webkit-backdrop-filter: blur(64px) saturate(200%);
   border: 1px solid var(--separator);
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-lg);
   animation: popup 0.3s var(--ease-spring);
+  /* Keep overflow removed so dropdowns work! */
 }
 
 
@@ -680,16 +681,13 @@ button:active {
   width: min(400px, 100%);
   padding: 32px;
   text-align: center;
-
-  background: rgba(30, 30, 33, 0.98);
-  backdrop-filter: blur(40px) saturate(160%);
-  -webkit-backdrop-filter: blur(40px) saturate(160%);
-
+  background: rgba(35, 35, 40, 0.72);
+  backdrop-filter: blur(64px) saturate(200%);
+  -webkit-backdrop-filter: blur(64px) saturate(200%);
   border: 1px solid var(--separator);
   border-radius: var(--r-xl);
   box-shadow: var(--shadow-lg);
 }
-
 .confirm-icon {
   width: 56px;
   height: 56px;
