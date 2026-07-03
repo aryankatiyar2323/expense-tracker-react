@@ -1215,3 +1215,38 @@ select:focus-visible,
     transition-duration: 0.001ms !important;
   }
 }
+
+/* ===========================================================
+   REACT COMPONENT GRID FIXES
+=========================================================== */
+/* 1. Force all React wrappers to respect the CSS Grid cells */
+.expense-form .react-select-container,
+.expense-form .react-datepicker-wrapper,
+.expense-form .react-datepicker__input-container {
+  width: 100%;
+  display: block !important; /* Stops inline-block from breaking borders */
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 2. Force the actual DatePicker input to stay inside its wrapper */
+.expense-form .react-datepicker__input-container input {
+  width: 100% !important;
+  box-sizing: border-box !important;
+  /* Add a blur to stop background text from bleeding through the input */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 3. Add a blur to React Select to fix the bleeding "Search expenses..." text */
+.expense-form .react-select__control {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* 4. Force the button to span the ENTIRE width of the modal, no matter what */
+.expense-form button {
+  grid-column: 1 / -1 !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
