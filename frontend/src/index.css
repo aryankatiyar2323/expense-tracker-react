@@ -572,13 +572,15 @@ button:active {
   width: min(420px, 92%);
   padding: 35px;
   text-align: center;
-
-  background: var(--surface-glass);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  
+  /* Increased opacity to 0.96 and blur to completely block out overlapping text */
+  background: rgba(25, 25, 30, 0.96);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  
   border: 0.5px solid var(--border);
   border-radius: 32px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
 }
 
 .confirm-icon {
