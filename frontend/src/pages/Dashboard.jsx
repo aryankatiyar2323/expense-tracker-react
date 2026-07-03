@@ -7,6 +7,20 @@ import ExpenseList from "../components/ExpenseList";
 import ConfirmModal from "../components/ConfirmModal";
 import { deleteExpense } from "../services/expenseService";
 import toast from "react-hot-toast";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
+
+const filterCategoryOptions = [
+  { value: "", label: "All Categories" },
+  { value: "Food", label: "🍔 Food" },
+  { value: "Travel", label: "✈️ Travel" },
+  { value: "Shopping", label: "🛍️ Shopping" },
+  { value: "Bills", label: "💡 Bills" },
+  { value: "Entertainment", label: "🎮 Entertainment" },
+  { value: "Health", label: "❤️ Health" },
+  { value: "Other", label: "📦 Other" },
+];
 
 function Dashboard() {
   const [editingExpense, setEditingExpense] = useState(null);
@@ -14,14 +28,26 @@ function Dashboard() {
   const [showForm, setShowForm] = useState(false);
   const [expenses, setExpenses] = useState([]);
   const [expenseToDelete, setExpenseToDelete] = useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const search = searchTerm.trim().toLowerCase();
 
   const filteredExpenses = expenses.filter((expense) => {
-    return (
+    const matchesSearch =
       expense.title.toLowerCase().includes(search) ||
-      expense.category.toLowerCase().includes(search)
-    );
+      expense.category.toLowerCase().includes(search);
+
+    const matchesCategory =
+      !selectedCategory ||
+      selectedCategory.value === "" ||
+      expense.category === selectedCategory.value;
+
+    const matchesDate =
+      !selectedDate ||
+      expense.date === selectedDate.toISOString().split("T")[0];
+
+    return matchesSearch && matchesCategory && matchesDate;
   });
 
   async function fetchExpenses() {
@@ -111,6 +137,40 @@ function Dashboard() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
+        </div>
+
+        <div className="filter-bar">
+          <div className="filter-item">
+            <DatePicker
+              selected={selectedDate}
+              onChange={setSelectedDate}
+              placeholderText="Filter by Date"
+              dateFormat="dd/MM/yyyy"
+            />
+          </div>
+
+          <div className="filter-item">
+            <Select
+              className="react-select-container"
+              classNamePrefix="react-select"
+              options={filterCategoryOptions}
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+              placeholder="All Categories"
+              isClearable
+            />
+          </div>
+
+          <button
+            className="clear-filters-btn"
+            onClick={() => {
+              setSearchTerm("");
+              setSelectedDate(null);
+              setSelectedCategory(null);
+            }}
+          >
+            Clear Filters
+          </button>
         </div>
 
         <ExpenseList
