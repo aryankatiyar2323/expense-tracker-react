@@ -4,12 +4,16 @@ import SummaryCard from "../components/SummaryCard";
 import { useState, useEffect } from "react";
 import { getExpenses } from "../services/expenseService";
 import ExpenseList from "../components/ExpenseList";
+import ConfirmModal from "../components/ConfirmModal";
+import { deleteExpense } from "../services/expenseService";
+import toast from "react-hot-toast";
 
 function Dashboard() {
   const [editingExpense, setEditingExpense] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [expenses, setExpenses] = useState([]);
+  const [expenseToDelete, setExpenseToDelete] = useState(null);
 
   const search = searchTerm.trim().toLowerCase();
 
@@ -23,6 +27,20 @@ function Dashboard() {
   async function fetchExpenses() {
     const expenses = await getExpenses();
     setExpenses(expenses);
+  }
+
+  async function handleDelete() {
+    try {
+      await deleteExpense(expenseToDelete.id);
+
+      await fetchExpenses();
+
+      setExpenseToDelete(null);
+
+      toast.success("Expense deleted successfully");
+    } catch (error) {
+      toast.error(error.message || "Failed to delete expense");
+    }
   }
 
   useEffect(() => {
@@ -69,6 +87,22 @@ function Dashboard() {
           </div>
         )}
 
+        {expenseToDelete && (
+          <ConfirmModal
+            title="Delete Expense"
+            message={
+              <>
+                Are you sure you want to delete{" "}
+                <strong>{expenseToDelete.title}</strong>?
+              </>
+            }
+            onCancel={() => {
+              setExpenseToDelete(null);
+            }}
+            onConfirm={handleDelete}
+          />
+        )}
+
         <div className="search-container">
           <input
             type="text"
@@ -81,7 +115,9 @@ function Dashboard() {
 
         <ExpenseList
           expenses={filteredExpenses}
-          onExpenseDeleted={fetchExpenses}
+          onDelete={(expense) => {
+            setExpenseToDelete(expense);
+          }}
           onEdit={(expense) => {
             setEditingExpense(expense);
 

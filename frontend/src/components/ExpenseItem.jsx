@@ -1,16 +1,4 @@
-import { deleteExpense } from "../services/expenseService";
-
-function ExpenseItem({ expense, onExpenseDeleted, onEdit }) {
-  async function handleDelete() {
-    try {
-      await deleteExpense(expense.id);
-
-      onExpenseDeleted();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+function ExpenseItem({ expense, onDelete, onEdit }) {
   return (
     <div className="expense-card">
       <div className="expense-card-header">
@@ -47,7 +35,7 @@ function ExpenseItem({ expense, onExpenseDeleted, onEdit }) {
             ✏ Edit
           </button>
 
-          <button className="delete-btn" onClick={handleDelete}>
+          <button className="delete-btn" onClick={() => onDelete(expense)}>
             🗑 Delete
           </button>
         </div>

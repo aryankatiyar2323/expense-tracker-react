@@ -2,7 +2,7 @@ import ExpenseItem from "./ExpenseItem";
 
 function ExpenseList({
   expenses,
-  onExpenseDeleted,
+  onDelete,
   onEdit,
 }) {
 
@@ -15,7 +15,7 @@ function ExpenseList({
         <ExpenseItem
           key={expense.id}
           expense={expense}
-          onExpenseDeleted={onExpenseDeleted}
+          onDelete={onDelete}
           onEdit={onEdit}
         />
 
