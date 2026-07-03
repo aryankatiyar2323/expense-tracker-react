@@ -839,6 +839,14 @@ select:focus-visible,
     bottom: 20px;
     right: 20px;
   }
+
+  .filter-bar{
+    grid-template-columns:1fr;
+}
+
+.clear-filters-btn{
+    height:50px;
+}
 }
 
 /* =================================================================
@@ -1544,4 +1552,76 @@ select:focus-visible,
 .react-datepicker {
   position: relative;
   z-index: 999999;
+}
+
+
+/* ==========================================================
+   FILTER BAR
+========================================================== */
+
+.filter-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 14px;
+
+  margin: 0 0 28px;
+
+  padding: 18px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--r-lg);
+
+  box-shadow: var(--shadow-xs);
+
+  animation: riseIn var(--dur) var(--ease);
+}
+
+.filter-item {
+  width: 100%;
+}
+
+.filter-item .react-select-container,
+.filter-item .react-datepicker-wrapper {
+  width: 100%;
+}
+
+.clear-filters-btn {
+  padding: 0 22px;
+
+  border: 1px solid var(--border);
+
+  border-radius: var(--r-sm);
+
+  background: transparent;
+
+  color: var(--ink);
+
+  font-family: var(--font-body);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.clear-filters-btn:hover {
+  background: var(--surface-hover);
+
+  border-color: var(--accent);
+
+  color: var(--accent-strong);
+}
+
+.clear-filters-btn:active {
+  transform: scale(.97);
 }
