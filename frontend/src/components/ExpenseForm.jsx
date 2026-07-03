@@ -107,34 +107,31 @@ function ExpenseForm({ onExpenseAdded, editingExpense, onEditComplete }) {
       <Select
         className="react-select-container"
         classNamePrefix="react-select"
+        menuPortalTarget={document.body}
+        menuPosition="fixed"
+        menuShouldBlockScroll={true}
         options={categoryOptions}
-        placeholder="Select Category"
         value={categoryOptions.find(
           (option) => option.value === formData.category,
         )}
         onChange={(selectedOption) =>
-          setFormData((prevData) => ({
-            ...prevData,
+          setFormData((prev) => ({
+            ...prev,
             category: selectedOption?.value || "",
           }))
         }
-        isSearchable
-        menuPortalTarget={document.body}
-        menuPosition="fixed"
-        menuPlacement="auto"
       />
 
       <DatePicker
         selected={formData.date}
         onChange={(date) =>
-          setFormData((prevData) => ({
-            ...prevData,
+          setFormData((prev) => ({
+            ...prev,
             date,
           }))
         }
         dateFormat="dd/MM/yyyy"
         placeholderText="Select Date"
-        popperPlacement="bottom-start"
       />
 
       <button type="submit">

@@ -7,12 +7,12 @@
   --bg: #000000;
   --bg-elevated: #1c1c1e;
 
-  --material-bar: rgba(22, 22, 24, 0.72);        /* navbar / thin material */
-  --material-card: rgba(255, 255, 255, 0.045);   /* resting glass surface */
+  --material-bar: rgba(22, 22, 24, 0.72); /* navbar / thin material */
+  --material-card: rgba(255, 255, 255, 0.045); /* resting glass surface */
   --material-card-hover: rgba(255, 255, 255, 0.075);
-  --material-sunken: rgba(0, 0, 0, 0.28);        /* inset fields */
+  --material-sunken: rgba(0, 0, 0, 0.28); /* inset fields */
   --material-sunken-focus: rgba(0, 0, 0, 0.4);
-  --material-popover: rgba(30, 30, 33, 0.88);    /* modals / menus / popovers */
+  --material-popover: rgba(30, 30, 33, 0.88); /* modals / menus / popovers */
 
   /* ===========================================================
      SEPARATORS
@@ -71,18 +71,25 @@
 
 body {
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "SF Pro Text",
-    "Inter",
-    "Helvetica Neue",
-    Arial,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue",
+    Arial, sans-serif;
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle at 20% -10%, rgba(10, 132, 255, 0.1), transparent 45%),
-    radial-gradient(circle at 100% 10%, rgba(255, 255, 255, 0.035), transparent 40%),
-    radial-gradient(circle at 50% 120%, rgba(50, 215, 75, 0.06), transparent 45%);
+    radial-gradient(
+      circle at 20% -10%,
+      rgba(10, 132, 255, 0.1),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 100% 10%,
+      rgba(255, 255, 255, 0.035),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 50% 120%,
+      rgba(50, 215, 75, 0.06),
+      transparent 45%
+    );
   background-attachment: fixed;
   color: var(--label);
   min-height: 100vh;
@@ -194,7 +201,9 @@ body {
   display: flex;
   align-items: center;
   gap: 18px;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition:
     background 0.25s var(--ease),
     border-color 0.25s var(--ease),
@@ -206,7 +215,9 @@ body {
   transform: translateY(-2px);
   background: var(--material-card-hover);
   border-color: var(--separator-strong);
-  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow:
+    var(--shadow-md),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .summary-icon {
@@ -357,7 +368,9 @@ body {
     transform 0.25s var(--ease),
     box-shadow 0.25s var(--ease);
   overflow: hidden;
-  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow:
+    var(--shadow-sm),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .expense-card:hover {
@@ -645,19 +658,34 @@ button:active {
 }
 
 .modal {
-  width: min(480px, 100%);
-  /* FIX: Back to translucent glass, but with a massive 64px blur to hide text behind it */
-  background: rgba(35, 35, 40, 0.72);
-  backdrop-filter: blur(64px) saturate(200%);
-  -webkit-backdrop-filter: blur(64px) saturate(200%);
-  border: 1px solid var(--separator);
-  border-radius: var(--r-xl);
-  box-shadow: var(--shadow-lg);
-  animation: popup 0.3s var(--ease-spring);
-  /* Keep overflow removed so dropdowns work! */
+  position: relative;
+  isolation: isolate;
+
+  width: min(520px, 92%);
+
+  background: #1f1f23;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  overflow: visible;
+
+  position: relative;
+
+  -webkit-backdrop-filter: blur(30px) saturate(180%);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  border-radius: 24px;
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+
+  overflow: visible;
+
+  z-index: 10000;
+
+  animation: popup 0.25s var(--ease-spring);
 }
-
-
 
 .modal .expense-form {
   background: transparent;
@@ -791,8 +819,16 @@ button:active {
   padding: 24px;
   background-color: var(--bg);
   background-image:
-    radial-gradient(circle at 15% -10%, rgba(10, 132, 255, 0.12), transparent 45%),
-    radial-gradient(circle at 100% 110%, rgba(50, 215, 75, 0.08), transparent 45%);
+    radial-gradient(
+      circle at 15% -10%,
+      rgba(10, 132, 255, 0.12),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 100% 110%,
+      rgba(50, 215, 75, 0.08),
+      transparent 45%
+    );
 }
 
 .auth-card {
@@ -1262,4 +1298,21 @@ select:focus-visible,
   grid-column: 1 / -1 !important;
   width: 100% !important;
   box-sizing: border-box;
+}
+
+.react-datepicker-popper {
+  z-index: 999999 !important;
+}
+
+.react-datepicker {
+  position: relative;
+  z-index: 999999;
+}
+
+.react-select__menu-portal {
+  z-index: 999999 !important;
+}
+
+.react-datepicker-popper {
+  z-index: 999999 !important;
 }
