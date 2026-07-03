@@ -1,20 +1,66 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  /* Core iOS Dark Mode Palette */
+  /* ===========================================================
+     SURFACES & MATERIALS  (macOS / iOS vibrancy layers)
+  =========================================================== */
   --bg: #000000;
-  --surface-glass: rgba(25, 25, 30, 0.4);
-  --surface-glass-hover: rgba(40, 40, 45, 0.5);
-  --primary: #0a84ff; /* iOS Blue */
-  --primary-hover: #007aff;
-  --green: #30d158; /* iOS Green */
-  --green-hover: #28cd41;
-  --red: #ff453a; /* iOS Red */
-  --red-hover: #ff3b30;
-  --text: #f5f5f7;
-  --muted: #86868b;
-  --border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.3);
+  --bg-elevated: #1c1c1e;
+
+  --material-bar: rgba(22, 22, 24, 0.72);        /* navbar / thin material */
+  --material-card: rgba(255, 255, 255, 0.045);   /* resting glass surface */
+  --material-card-hover: rgba(255, 255, 255, 0.075);
+  --material-sunken: rgba(0, 0, 0, 0.28);        /* inset fields */
+  --material-sunken-focus: rgba(0, 0, 0, 0.4);
+  --material-popover: rgba(30, 30, 33, 0.88);    /* modals / menus / popovers */
+
+  /* ===========================================================
+     SEPARATORS
+  =========================================================== */
+  --separator: rgba(255, 255, 255, 0.09);
+  --separator-strong: rgba(255, 255, 255, 0.16);
+
+  /* ===========================================================
+     LABELS  (Apple's label / secondaryLabel / tertiaryLabel)
+  =========================================================== */
+  --label: rgba(255, 255, 255, 0.94);
+  --label-secondary: rgba(235, 235, 245, 0.6);
+  --label-tertiary: rgba(235, 235, 245, 0.38);
+
+  /* ===========================================================
+     SYSTEM ACCENTS
+  =========================================================== */
+  --accent: #0a84ff;
+  --accent-strong: #409cff;
+  --accent-press: #0071e3;
+  --green: #32d74b;
+  --green-dim: rgba(50, 215, 75, 0.15);
+  --red: #ff453a;
+  --red-dim: rgba(255, 69, 58, 0.14);
+
+  /* ===========================================================
+     RADII
+  =========================================================== */
+  --r-xs: 8px;
+  --r-sm: 12px;
+  --r-md: 16px;
+  --r-lg: 20px;
+  --r-xl: 26px;
+  --r-full: 999px;
+
+  /* ===========================================================
+     SHADOWS
+  =========================================================== */
+  --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 14px 34px -10px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 28px 64px -16px rgba(0, 0, 0, 0.6);
+  --shadow-glow-accent: 0 10px 24px -6px rgba(10, 132, 255, 0.4);
+
+  /* ===========================================================
+     MOTION  (Apple's standard + spring curves)
+  =========================================================== */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-spring: cubic-bezier(0.34, 1.35, 0.64, 1);
 }
 
 * {
@@ -25,28 +71,23 @@
 
 body {
   font-family:
-    "Poppins",
     -apple-system,
     BlinkMacSystemFont,
+    "SF Pro Text",
+    "Inter",
+    "Helvetica Neue",
+    Arial,
     sans-serif;
-  /* Dark mesh background for glass to blur */
-  background-color: #0f172a;
+  background-color: var(--bg);
   background-image:
-    radial-gradient(
-      circle at 15% 50%,
-      rgba(10, 132, 255, 0.15),
-      transparent 25%
-    ),
-    radial-gradient(
-      circle at 85% 30%,
-      rgba(48, 209, 88, 0.12),
-      transparent 25%
-    ),
-    radial-gradient(circle at 50% 100%, rgba(255, 69, 58, 0.1), transparent 30%);
+    radial-gradient(circle at 20% -10%, rgba(10, 132, 255, 0.1), transparent 45%),
+    radial-gradient(circle at 100% 10%, rgba(255, 255, 255, 0.035), transparent 40%),
+    radial-gradient(circle at 50% 120%, rgba(50, 215, 75, 0.06), transparent 45%);
   background-attachment: fixed;
-  color: var(--text);
+  color: var(--label);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
@@ -58,16 +99,16 @@ body {
 =========================================================== */
 .navbar {
   width: 100%;
-  height: 72px;
+  height: 64px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 60px;
+  padding: 0 32px;
 
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
-  border-bottom: 0.5px solid var(--border);
+  background: var(--material-bar);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-bottom: 1px solid var(--separator);
 
   position: sticky;
   top: 0;
@@ -75,31 +116,38 @@ body {
 }
 
 .logo {
-  font-size: 24px;
-  font-weight: 600;
-  letter-spacing: -0.5px;
-  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--label);
 }
 
 .logo span {
-  color: var(--primary);
+  color: var(--accent);
 }
 
 .logout-btn {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 20px;
+  padding: 8px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--r-full);
   cursor: pointer;
-  color: white;
-  background: rgba(255, 69, 58, 0.15);
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  color: var(--red);
+  background: var(--red-dim);
+  font-size: 13px;
+  font-weight: 600;
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.15s var(--ease);
 }
 
 .logout-btn:hover {
   background: var(--red);
-  transform: scale(1.05);
+  color: #fff;
+}
+
+.logout-btn:active {
+  transform: scale(0.96);
 }
 
 /* ===========================================================
@@ -107,23 +155,23 @@ body {
 =========================================================== */
 .dashboard {
   width: min(1180px, 92%);
-  margin: 40px auto;
+  margin: 32px auto 64px;
 }
 
 .dashboard-header {
-  margin-bottom: 35px;
+  margin-bottom: 28px;
 }
 
 .dashboard-header h1 {
-  font-size: 38px;
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: -1px;
+  letter-spacing: -0.02em;
   margin-bottom: 4px;
 }
 
 .dashboard-header p {
-  color: var(--muted);
-  font-size: 15px;
+  color: var(--label-secondary);
+  font-size: 14px;
 }
 
 /* ===========================================================
@@ -132,119 +180,136 @@ body {
 .summary-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  margin-bottom: 35px;
+  gap: 16px;
+  margin-bottom: 28px;
 }
 
 .summary-card {
-  background: var(--surface-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--border);
-  border-radius: 28px;
-  padding: 30px;
+  background: var(--material-card);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-lg);
+  padding: 24px;
   display: flex;
   align-items: center;
-  gap: 24px;
-  box-shadow: var(--glass-shadow);
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  gap: 18px;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition:
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
 }
 
 .summary-card:hover {
-  transform: translateY(-4px);
-  background: var(--surface-glass-hover);
-  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  background: var(--material-card-hover);
+  border-color: var(--separator-strong);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 .summary-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 20px;
-  background: rgba(10, 132, 255, 0.15);
+  width: 48px;
+  height: 48px;
+  border-radius: var(--r-md);
+  background: rgba(10, 132, 255, 0.14);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 26px;
-  color: var(--primary);
+  font-size: 21px;
+  color: var(--accent);
+  flex-shrink: 0;
 }
 
 .summary-card h3 {
-  color: var(--muted);
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--label-secondary);
+  font-size: 12px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 }
 
 .summary-card h2 {
-  margin-top: 4px;
-  font-size: 36px;
-  font-weight: 600;
-  letter-spacing: -1px;
+  margin-top: 2px;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* ===========================================================
    FORM
 =========================================================== */
 .expense-form {
-  background: var(--surface-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--border);
-  border-radius: 28px;
-  padding: 35px;
+  background: var(--material-card);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-lg);
+  padding: 28px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  margin-bottom: 40px;
-  box-shadow: var(--glass-shadow);
+  gap: 16px;
+  margin-bottom: 32px;
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .expense-form h2 {
   grid-column: 1/-1;
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-bottom: 6px;
 }
 
 .expense-form input,
 .expense-form select {
-  padding: 16px 20px;
-  border-radius: 16px;
-  border: 0.5px solid var(--border);
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 15px;
+  padding: 14px 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--separator);
+  background: var(--material-sunken);
+  color: var(--label);
+  font-size: 14.5px;
   outline: none;
-  transition: all 0.3s ease;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .expense-form input:focus,
 .expense-form select:focus {
-  border-color: var(--primary);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15);
+  border-color: var(--accent);
+  background: var(--material-sunken-focus);
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.16);
 }
 
 .expense-form button {
   grid-column: 1/-1;
-  margin-top: 10px;
-  padding: 18px;
+  margin-top: 6px;
+  padding: 15px;
   border: none;
-  border-radius: 18px;
-  background: var(--primary);
+  border-radius: var(--r-sm);
+  background: var(--accent);
   color: white;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  letter-spacing: -0.01em;
+  transition:
+    background 0.2s var(--ease),
+    transform 0.15s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .expense-form button:hover {
-  background: var(--primary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(10, 132, 255, 0.4);
+  background: var(--accent-strong);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.expense-form button:active {
+  transform: scale(0.98);
+  background: var(--accent-press);
 }
 
 /* ===========================================================
@@ -252,108 +317,118 @@ body {
 =========================================================== */
 .expense-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
 }
 
 .expense-card {
-  background: var(--surface-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 0.5px solid var(--border);
-  border-radius: 28px;
-  padding: 26px;
+  background: var(--material-card);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-md);
+  padding: 22px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition:
+    background 0.25s var(--ease),
+    border-color 0.25s var(--ease),
+    transform 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
   overflow: hidden;
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .expense-card:hover {
-  transform: translateY(-6px);
-  background: var(--surface-glass-hover);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+  background: var(--material-card-hover);
+  border-color: var(--separator-strong);
+  box-shadow: var(--shadow-md);
 }
 
 .expense-card-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  gap: 12px;
 }
 
 .expense-card h3 {
-  font-size: 20px;
-  margin-bottom: 8px;
-  font-weight: 500;
+  font-size: 16.5px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   word-break: break-word;
 }
 
 .expense-price {
-  font-size: 28px;
-  font-weight: 600;
-  color: white;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--label);
   white-space: nowrap;
+  letter-spacing: -0.01em;
 }
 
 .category-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 0.5px solid rgba(255, 255, 255, 0.05);
-  color: var(--muted);
-  font-size: 12px;
-  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--separator);
+  color: var(--label-secondary);
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.04em;
 }
 
 .expense-card-footer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .expense-card-footer p {
-  color: var(--muted);
-  font-size: 14px;
+  color: var(--label-secondary);
+  font-size: 13px;
 }
 
 .expense-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .edit-btn,
 .delete-btn {
   flex: 1;
-  padding: 12px;
+  padding: 11px;
   border: none;
-  border-radius: 14px;
+  border-radius: var(--r-sm);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 500;
-  transition: all 0.3s ease;
+  font-size: 13.5px;
+  font-weight: 600;
+  transition:
+    background 0.2s var(--ease),
+    color 0.2s var(--ease),
+    transform 0.15s var(--ease);
 }
 
 .edit-btn {
-  background: rgba(48, 209, 88, 0.15);
+  background: var(--green-dim);
   color: var(--green);
 }
 
 .edit-btn:hover {
   background: var(--green);
-  color: white;
+  color: #04240b;
 }
 
 .delete-btn {
-  background: rgba(255, 69, 58, 0.15);
+  background: var(--red-dim);
   color: var(--red);
 }
 
@@ -362,28 +437,35 @@ body {
   color: white;
 }
 
+.edit-btn:active,
+.delete-btn:active {
+  transform: scale(0.96);
+}
+
 /* ===========================================================
    INPUT POLISH & SCROLLBAR
 =========================================================== */
 input::placeholder {
-  color: #6e6e73;
+  color: var(--label-tertiary);
 }
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2398989d%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
   background-position: right 1rem top 50%;
-  background-size: 0.65rem auto;
-  padding-right: 2.5rem !important; 
+  background-size: 0.6rem auto;
+  padding-right: 2.5rem !important;
+  cursor: pointer;
 }
 
 select option {
-  background-color: #1c1c1e;
-  color: #f5f5f7;
+  background-color: var(--bg-elevated);
+  color: var(--label);
   padding: 12px;
-  font-size: 15px;
+  font-size: 14.5px;
 }
 
 input[type="date"]:focus {
@@ -391,18 +473,14 @@ input[type="date"]:focus {
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(1) brightness(100%);
+  filter: invert(1) brightness(90%);
   cursor: pointer;
-  opacity: 0.8;
-  transition: all 0.3s ease;
+  opacity: 0.7;
+  transition: opacity 0.2s var(--ease);
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1;
-}
-
-select {
-  cursor: pointer;
 }
 
 input[type="number"]::-webkit-inner-spin-button,
@@ -416,22 +494,43 @@ input[type="number"] {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: var(--r-full);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.28);
 }
 
 ::selection {
-  background: var(--primary);
+  background: var(--accent);
   color: white;
+}
+
+/* Accessibility: visible keyboard focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
 
 /* ===========================================================
@@ -446,24 +545,24 @@ input[type="number"] {
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 0 24px;
+    padding: 0 20px;
   }
   .dashboard {
     width: 90%;
     margin: 20px auto;
   }
   .dashboard-header h1 {
-    font-size: 32px;
+    font-size: 26px;
   }
   .summary-card,
   .expense-form {
-    padding: 24px;
-  }
-  .expense-card {
     padding: 20px;
   }
+  .expense-card {
+    padding: 18px;
+  }
   .expense-price {
-    font-size: 24px;
+    font-size: 20px;
   }
   .expense-actions {
     flex-direction: column;
@@ -473,37 +572,39 @@ input[type="number"] {
 /* ===========================================================
    ANIMATIONS & FLOATING BTN
 =========================================================== */
-button,
-input,
-select,
-.expense-card,
-.summary-card {
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
 button:active {
-  transform: scale(0.96) !important;
+  transform: scale(0.96);
 }
 
 .floating-btn {
   position: fixed;
-  bottom: 40px;
-  right: 40px;
-  width: 64px;
-  height: 64px;
-  border-radius: 32px;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
   border: none;
-  background: var(--primary);
+  background: var(--accent);
   color: white;
-  font-size: 32px;
+  font-size: 26px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(10, 132, 255, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-glow-accent), var(--shadow-md);
+  transition:
+    background 0.2s var(--ease),
+    transform 0.2s var(--ease-spring);
   z-index: 999;
 }
 
 .floating-btn:hover {
-  transform: scale(1.05);
-  background: var(--primary-hover);
+  transform: scale(1.06);
+  background: var(--accent-strong);
+}
+
+.floating-btn:active {
+  transform: scale(0.94);
 }
 
 /* ===========================================================
@@ -511,29 +612,27 @@ button:active {
 =========================================================== */
 .modal-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  animation: fade 0.3s ease;
+  animation: fade 0.25s var(--ease);
+  padding: 20px;
 }
 
 .modal {
-  width: min(520px, 92%);
-  background: rgba(25, 25, 30, 0.95);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  border: 0.5px solid var(--border);
-  border-radius: 32px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-  animation: popup 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  width: min(480px, 100%);
+  background: var(--material-popover);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+  border: 1px solid var(--separator);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
+  animation: popup 0.3s var(--ease-spring);
   overflow: hidden;
 }
 
@@ -548,7 +647,7 @@ button:active {
 
 @keyframes popup {
   from {
-    transform: translateY(40px) scale(0.95);
+    transform: translateY(24px) scale(0.96);
     opacity: 0;
   }
   to {
@@ -569,79 +668,81 @@ button:active {
    CONFIRM MODAL
 =========================================================== */
 .confirm-modal {
-  width: min(420px, 92%);
-  padding: 35px;
+  width: min(400px, 100%);
+  padding: 32px;
   text-align: center;
-  
-  /* Increased opacity to 0.96 and blur to completely block out overlapping text */
-  background: rgba(25, 25, 30, 0.96);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
-  
-  border: 0.5px solid var(--border);
-  border-radius: 32px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+
+  background: var(--material-popover);
+  backdrop-filter: blur(40px) saturate(160%);
+  -webkit-backdrop-filter: blur(40px) saturate(160%);
+
+  border: 1px solid var(--separator);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg);
 }
 
 .confirm-icon {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 24px;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 22px;
-  font-size: 34px;
-  background: rgba(255, 69, 58, 0.15);
+  border-radius: var(--r-md);
+  font-size: 26px;
+  background: var(--red-dim);
   color: var(--red);
 }
 
 .confirm-modal h2 {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  letter-spacing: -0.5px;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: -0.01em;
 }
 
 .confirm-modal p {
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 12px;
+  color: var(--label-secondary);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 10px;
 }
 
 .confirm-warning {
   display: block;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
   color: var(--red);
-  font-size: 13px;
-  font-weight: 500;
+  font-size: 12.5px;
+  font-weight: 600;
 }
 
 .confirm-actions {
   display: flex;
-  gap: 12px;
+  gap: 10px;
 }
 
 .cancel-btn,
 .confirm-btn {
   flex: 1;
-  padding: 16px;
+  padding: 14px;
   border: none;
-  border-radius: 16px;
+  border-radius: var(--r-sm);
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 600;
+  transition:
+    background 0.2s var(--ease),
+    transform 0.15s var(--ease);
 }
 
 .cancel-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  border: 0.5px solid var(--border);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--label);
+  border: 1px solid var(--separator);
 }
 
 .cancel-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.13);
 }
 
 .confirm-btn {
@@ -650,8 +751,13 @@ button:active {
 }
 
 .confirm-btn:hover {
-  background: var(--red-hover);
-  box-shadow: 0 10px 25px rgba(255, 69, 58, 0.35);
+  background: #ff6961;
+  box-shadow: 0 10px 24px rgba(255, 69, 58, 0.3);
+}
+
+.cancel-btn:active,
+.confirm-btn:active {
+  transform: scale(0.97);
 }
 
 /* ===========================================================
@@ -663,111 +769,115 @@ button:active {
   justify-content: center;
   align-items: center;
   padding: 24px;
-  background-color: #0f172a;
+  background-color: var(--bg);
   background-image:
-    radial-gradient(
-      circle at 80% -20%,
-      rgba(10, 132, 255, 0.2),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at -20% 120%,
-      rgba(48, 209, 88, 0.15),
-      transparent 40%
-    );
+    radial-gradient(circle at 15% -10%, rgba(10, 132, 255, 0.12), transparent 45%),
+    radial-gradient(circle at 100% 110%, rgba(50, 215, 75, 0.08), transparent 45%);
 }
 
 .auth-card {
   width: 100%;
-  max-width: 420px;
-  padding: 40px;
-  border-radius: 32px;
+  max-width: 400px;
+  padding: 36px;
+  border-radius: var(--r-xl);
 
-  background: var(--surface-glass);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
-  border: 0.5px solid var(--border);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+  background: var(--material-popover);
+  backdrop-filter: blur(36px) saturate(160%);
+  -webkit-backdrop-filter: blur(36px) saturate(160%);
+  border: 1px solid var(--separator);
+  box-shadow: var(--shadow-lg);
 }
 
 .auth-logo {
-  width: 72px;
-  height: 72px;
-  margin: 0 auto 24px;
-  border-radius: 22px;
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  border-radius: 18px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 32px;
-  background: var(--primary);
-  box-shadow: 0 10px 25px rgba(10, 132, 255, 0.4);
+  font-size: 27px;
+  background: var(--accent);
+  box-shadow: var(--shadow-glow-accent);
 }
 
 .auth-title {
   text-align: center;
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.5px;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
 }
 
 .auth-subtitle {
   text-align: center;
-  color: var(--muted);
-  margin-bottom: 32px;
-  font-size: 15px;
+  color: var(--label-secondary);
+  margin-bottom: 28px;
+  font-size: 14px;
 }
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .auth-input {
-  padding: 16px 20px;
-  border: 0.5px solid var(--border);
+  padding: 14px 16px;
+  border: 1px solid var(--separator);
   outline: none;
-  border-radius: 16px;
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 15px;
+  border-radius: var(--r-sm);
+  background: var(--material-sunken);
+  color: var(--label);
+  font-size: 14.5px;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .auth-input:focus {
-  border-color: var(--primary);
-  background: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15);
+  border-color: var(--accent);
+  background: var(--material-sunken-focus);
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.16);
 }
 
 .auth-btn {
-  margin-top: 12px;
-  padding: 16px;
+  margin-top: 8px;
+  padding: 15px;
   border: none;
-  border-radius: 16px;
-  background: var(--primary);
+  border-radius: var(--r-sm);
+  background: var(--accent);
   color: white;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    background 0.2s var(--ease),
+    transform 0.15s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .auth-btn:hover {
-  background: var(--primary-hover);
-  box-shadow: 0 10px 25px rgba(10, 132, 255, 0.4);
+  background: var(--accent-strong);
+  box-shadow: var(--shadow-glow-accent);
+}
+
+.auth-btn:active {
+  transform: scale(0.98);
 }
 
 .auth-link {
-  margin-top: 24px;
+  margin-top: 22px;
   text-align: center;
-  color: var(--muted);
-  font-size: 14px;
+  color: var(--label-secondary);
+  font-size: 13.5px;
 }
 
 .auth-link a {
-  color: var(--primary);
+  color: var(--accent);
   text-decoration: none;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .auth-link a:hover {
@@ -777,12 +887,12 @@ button:active {
 .auth-error {
   width: 100%;
   margin: 0 0 16px;
-  padding: 12px 16px;
-  color: #ff453a;
-  background: rgba(255, 69, 58, 0.1);
-  border: 0.5px solid rgba(255, 69, 58, 0.2);
-  border-radius: 12px;
-  font-size: 14px;
+  padding: 11px 14px;
+  color: var(--red);
+  background: var(--red-dim);
+  border: 1px solid rgba(255, 69, 58, 0.22);
+  border-radius: var(--r-sm);
+  font-size: 13px;
   font-weight: 500;
   text-align: center;
 }
@@ -791,41 +901,273 @@ button:active {
    SEARCH
 =========================================================== */
 .search-container {
-  margin: 2rem 0;
+  margin: 1.75rem 0;
   display: flex;
   justify-content: center;
 }
 
 .search-input {
-  width: min(100%, 500px);
-  padding: 16px 24px;
+  width: min(100%, 480px);
+  padding: 14px 20px;
 
-  background: var(--surface-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--material-card);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
 
-  color: var(--text);
-  font-size: 15px;
+  color: var(--label);
+  font-size: 14.5px;
 
-  border: 0.5px solid var(--border);
-  border-radius: 24px;
+  border: 1px solid var(--separator);
+  border-radius: var(--r-full);
   outline: none;
-  box-shadow: var(--glass-shadow);
+  box-shadow: var(--shadow-sm);
+  transition:
+    background 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    box-shadow 0.2s var(--ease);
 }
 
 .search-input::placeholder {
-  color: var(--muted);
+  color: var(--label-tertiary);
 }
 
 .search-input:hover {
-  background: var(--surface-glass-hover);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--material-card-hover);
+  border-color: var(--separator-strong);
 }
 
 .search-input:focus {
-  border-color: var(--primary);
+  border-color: var(--accent);
   box-shadow:
-    0 0 0 4px rgba(10, 132, 255, 0.15),
-    var(--glass-shadow);
-  background: rgba(0, 0, 0, 0.4);
+    0 0 0 4px rgba(10, 132, 255, 0.16),
+    var(--shadow-sm);
+  background: var(--material-sunken);
+}
+
+/* ===========================================================
+   REACT SELECT (macOS Sequoia inspired)
+=========================================================== */
+.react-select-container {
+  width: 100%;
+}
+
+.react-select__control {
+  min-height: 50px !important;
+  background: var(--material-sunken) !important;
+  border: 1px solid var(--separator) !important;
+  border-radius: var(--r-sm) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: var(--shadow-sm) !important;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease),
+    box-shadow 0.2s var(--ease) !important;
+}
+
+.react-select__control:hover {
+  border-color: var(--separator-strong) !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.react-select__control--is-focused {
+  border-color: var(--accent) !important;
+  box-shadow:
+    0 0 0 4px rgba(10, 132, 255, 0.16),
+    var(--shadow-sm) !important;
+}
+
+.react-select__value-container {
+  padding: 2px 14px !important;
+}
+
+.react-select__single-value {
+  color: var(--label) !important;
+  font-size: 14.5px;
+  font-weight: 500;
+}
+
+.react-select__placeholder {
+  color: var(--label-tertiary) !important;
+  font-size: 14.5px;
+}
+
+.react-select__input-container {
+  color: var(--label) !important;
+}
+
+.react-select__input {
+  color: var(--label) !important;
+}
+
+.react-select__indicator-separator {
+  display: none;
+}
+
+.react-select__dropdown-indicator {
+  color: var(--label-tertiary) !important;
+  padding-right: 12px !important;
+  transition:
+    transform 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.react-select__control--menu-is-open .react-select__dropdown-indicator {
+  transform: rotate(180deg);
+  color: var(--accent) !important;
+}
+
+.react-select__menu {
+  overflow: hidden !important;
+  margin-top: 8px !important;
+  border-radius: var(--r-md) !important;
+  background: var(--material-popover) !important;
+  backdrop-filter: blur(34px);
+  -webkit-backdrop-filter: blur(34px);
+  border: 1px solid var(--separator);
+  box-shadow: var(--shadow-lg) !important;
+  animation: selectPopup 0.16s var(--ease);
+}
+
+.react-select__menu-list {
+  padding: 6px;
+}
+
+.react-select__option {
+  color: var(--label) !important;
+  border-radius: var(--r-xs);
+  padding: 11px 14px;
+  cursor: pointer;
+  transition: background 0.15s var(--ease);
+  font-size: 14px;
+}
+
+.react-select__option--is-focused {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+.react-select__option--is-selected {
+  background: var(--accent) !important;
+  color: white !important;
+}
+
+.react-select__option:active {
+  background: var(--accent-press) !important;
+}
+
+@keyframes selectPopup {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ===========================================================
+   REACT DATE PICKER
+=========================================================== */
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker__input-container input {
+  width: 100%;
+  height: 50px;
+  padding: 0 16px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--separator);
+  background: var(--material-sunken);
+  color: var(--label);
+  font-size: 14.5px;
+  transition:
+    border-color 0.2s var(--ease),
+    background 0.2s var(--ease);
+  backdrop-filter: blur(20px);
+}
+
+.react-datepicker__input-container input::placeholder {
+  color: var(--label-tertiary);
+}
+
+.react-datepicker__input-container input:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--separator-strong);
+}
+
+.react-datepicker__input-container input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.16);
+}
+
+.react-datepicker {
+  overflow: hidden;
+  border: none !important;
+  border-radius: var(--r-md) !important;
+  background: var(--material-popover) !important;
+  backdrop-filter: blur(34px);
+  box-shadow: var(--shadow-lg);
+  font-family: inherit !important;
+}
+
+.react-datepicker__triangle {
+  display: none;
+}
+
+.react-datepicker__header {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-bottom: 1px solid var(--separator) !important;
+  padding: 16px 0 !important;
+}
+
+.react-datepicker__current-month {
+  color: var(--label) !important;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.react-datepicker__day-name {
+  color: var(--label-tertiary) !important;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.react-datepicker__day {
+  color: var(--label) !important;
+  width: 36px !important;
+  height: 36px !important;
+  line-height: 36px !important;
+  border-radius: var(--r-xs) !important;
+  transition: background 0.15s var(--ease);
+  font-size: 13px;
+}
+
+.react-datepicker__day:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background: var(--accent) !important;
+  color: white !important;
+}
+
+.react-datepicker__day--today {
+  border: 1px solid var(--accent) !important;
+  font-weight: 600;
+}
+
+.react-datepicker__navigation {
+  top: 16px !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--label-secondary) !important;
+}
+
+.react-datepicker__month-container {
+  padding-bottom: 10px;
 }
