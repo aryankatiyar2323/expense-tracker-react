@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Select from "react-select";
+import BudgetTracker from "../components/BudgetTracker";
 
 const filterCategoryOptions = [
   { value: "", label: "All Categories" },
@@ -50,6 +51,41 @@ function Dashboard() {
     return matchesSearch && matchesCategory && matchesDate;
   });
 
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+
+  const thisMonthExpenses = expenses.filter((expense) => {
+    const expenseDate = new Date(expense.date);
+
+    return (
+      expenseDate.getMonth() === currentMonth &&
+      expenseDate.getFullYear() === currentYear
+    );
+  });
+
+  const totalThisMonth = thisMonthExpenses.reduce(
+    (sum, expense) => sum + Number(expense.amount),
+    0,
+  );
+
+  const totalTransactionsThisMonth = thisMonthExpenses.length;
+
+  const monthlyBudget = 20000;
+
+  const remainingBudget = monthlyBudget - totalThisMonth;
+
+  const budgetPercentage = Math.min(
+    (totalThisMonth / monthlyBudget) * 100,
+    100,
+  );
+
+  const budgetStatus =
+    totalThisMonth > monthlyBudget
+      ? "Exceeded"
+      : totalThisMonth > monthlyBudget * 0.7
+        ? "Warning"
+        : "Safe";
+
   async function fetchExpenses() {
     const expenses = await getExpenses();
     setExpenses(expenses);
@@ -84,7 +120,24 @@ function Dashboard() {
           <p>Manage all your expenses in one place.</p>
         </div>
 
-        <SummaryCard expenses={expenses} />
+
+        <SummaryCard
+          expenses={expenses}
+          totalThisMonth={totalThisMonth}
+          totalTransactionsThisMonth={totalTransactionsThisMonth}
+          monthlyBudget={monthlyBudget}
+          remainingBudget={remainingBudget}
+          budgetPercentage={budgetPercentage}
+          budgetStatus={budgetStatus}
+        />
+
+        <BudgetTracker
+          monthlyBudget={monthlyBudget}
+          totalThisMonth={totalThisMonth}
+          remainingBudget={remainingBudget}
+          budgetPercentage={budgetPercentage}
+          budgetStatus={budgetStatus}
+        />
 
         {showForm && (
           <div
